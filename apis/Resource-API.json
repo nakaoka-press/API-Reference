@@ -1,0 +1,391 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "fmajuvnnsgvps"
+  },
+  "info": {
+    "title": "Resource API",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/v1/products/": {
+      "get": {
+        "summary": "製品の一覧取得",
+        "tags": [
+          "products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "object": "product",
+                      "products": [
+                        {
+                          "element_id": "1111-xxxx-0000-zzzz",
+                          "product-number": "123-4567-8910",
+                          "product-name": "product-blah-blah",
+                          "alias": "product-foo-bar-baz",
+                          "client-id": 1,
+                          "delivery-spot": "0",
+                          "snp": 100,
+                          "box": 2,
+                          "unit_weight": 0.05,
+                          "unit_price": 0.2
+                        }
+                      ],
+                      "products_count": 1
+                    }
+                  },
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "has_more": {
+                      "type": "boolean",
+                      "description": "より多くの製品情報があるかどうかの真偽値。`false`であればリストの末尾。"
+                    },
+                    "products": {
+                      "type": "array",
+                      "description": "取得した製品情報の配列（ページネーションにより取得数が変動する）",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "element_id": {
+                            "type": "string",
+                            "description": "エレメント固有のID"
+                          },
+                          "number": {
+                            "type": "string",
+                            "description": "製品固有の製品番号。取引先との間で使用する正式な番号。"
+                          },
+                          "number_alias": {
+                            "type": "string",
+                            "description": "社内で扱われている製品番号。社内で利用する。"
+                          },
+                          "product_name": {
+                            "type": "string",
+                            "description": "製品名称。取引先との間で使用する正式名称。"
+                          },
+                          "name_alias": {
+                            "type": "string",
+                            "description": "社内で使われている製品名称。社内で利用する。"
+                          },
+                          "client": {
+                            "type": "integer",
+                            "description": "取引先を示す番号。"
+                          },
+                          "delivery_spot": {
+                            "type": "string",
+                            "description": "製品を納品する場所。納地。"
+                          },
+                          "snp": {
+                            "type": "integer",
+                            "description": "1つの梱包材に入れる数量。"
+                          },
+                          "box": {
+                            "type": "integer",
+                            "description": "梱包材の種類。"
+                          },
+                          "unit_weight": {
+                            "type": "number",
+                            "description": "製品の単位重量（kg）。"
+                          },
+                          "unit_price": {
+                            "type": "number",
+                            "description": "製品の単価（円）。"
+                          }
+                        }
+                      }
+                    },
+                    "products_count": {
+                      "type": "integer",
+                      "description": "取得した配列のサイズ。"
+                    }
+                  }
+                },
+                "examples": {
+                  "Response example": {
+                    "value": {
+                      "object_type": "string",
+                      "has_more": true,
+                      "products": [
+                        {
+                          "element_id": "2EDE44A3-62D6-4739-A7BA-B4A51E7BA229",
+                          "number": "34H0093-11",
+                          "number_alias": "4H0093-11",
+                          "product_name": "防振ゴム",
+                          "name_alias": "防振ゴム",
+                          "client": 2,
+                          "delivery_spot": "somewhere",
+                          "snp": 100,
+                          "box": 2,
+                          "unit_weight": 1.5,
+                          "unit_price": 10.5
+                        }
+                      ],
+                      "products_count": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-products",
+        "x-internal": false,
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "最大取得数"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "description": "取得位置（相対位置）"
+          }
+        ]
+      },
+      "post": {
+        "summary": "製品の新規登録",
+        "tags": [
+          "products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "製品を新規登録した日付"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "新規で登録した製品の情報にアクセスするためのURL"
+                    }
+                  }
+                },
+                "examples": {
+                  "Response example": {
+                    "value": {
+                      "object": "product_link",
+                      "created_at": "20221108",
+                      "url": "https://localhost:3000/v1/products/2EDE44A3-62D6-4739-A7BA-B4A51E7BA229"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-products",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "object_type": "product",
+                    "number": "34H0093-11",
+                    "number_alias": "4H0093-11",
+                    "product_name": "防振ゴム",
+                    "name_alias": "防振ゴム",
+                    "client": 2,
+                    "delivery_spot": "somewhere",
+                    "snp": 100,
+                    "box": 2,
+                    "unit_weight": 1.5,
+                    "unit_price": 10.5
+                  }
+                },
+                "properties": {
+                  "object_type": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string",
+                    "description": "取引先との間で使用する正式な製品番号。"
+                  },
+                  "number_alias": {
+                    "type": "string",
+                    "description": "社内で使用する製品番号。"
+                  },
+                  "product_name": {
+                    "type": "string",
+                    "description": "取引先との間で使用する正式な製品名称。"
+                  },
+                  "name_alias": {
+                    "type": "string",
+                    "description": "社内で使用する製品名称。"
+                  },
+                  "client": {
+                    "type": "integer",
+                    "description": "取引先を示す番号。"
+                  },
+                  "delivery_spot": {
+                    "type": "string",
+                    "description": "製品を納品する場所。納地。"
+                  },
+                  "snp": {
+                    "type": "integer",
+                    "description": "1つの梱包材に入れる数量。"
+                  },
+                  "box": {
+                    "type": "integer",
+                    "description": "梱包材の種類。"
+                  },
+                  "unit_weight": {
+                    "type": "number",
+                    "description": "製品の単位重量（kg）。"
+                  },
+                  "unit_price": {
+                    "type": "number",
+                    "description": "製品の単価（円）。"
+                  }
+                },
+                "required": [
+                  "number",
+                  "product_name",
+                  "client",
+                  "delivery_spot",
+                  "unit_weight",
+                  "unit_price"
+                ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "object_type": "string",
+                    "number": "string",
+                    "number_alias": "string",
+                    "product_name": "string",
+                    "name_alias": "string",
+                    "client": 0,
+                    "delivery_spot": "string",
+                    "snp": 0,
+                    "box": 0,
+                    "unit_weight": 0,
+                    "unit_price": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/{product-id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "product-id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "特定の製品の情報取得",
+        "tags": [
+          "products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "element-id": {
+                      "type": "string"
+                    },
+                    "product-number": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "alias": {
+                      "type": "string"
+                    },
+                    "snp": {
+                      "type": "integer"
+                    },
+                    "unit-weight": {
+                      "type": "number"
+                    },
+                    "unit-price": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-products-product-id",
+        "parameters": [],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": ""
+        },
+        "x-internal": true
+      },
+      "delete": {
+        "summary": "製品の削除",
+        "tags": [
+          "products"
+        ],
+        "responses": {},
+        "operationId": "delete-v1-products-product-id"
+      },
+      "patch": {
+        "summary": "製品の更新",
+        "tags": [
+          "products"
+        ],
+        "responses": {},
+        "operationId": "patch-v1-products-product-id"
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
