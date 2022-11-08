@@ -14,4 +14,4 @@ OpenAPI に準じた API を設計します。
 
 ## API Reference
 
--   [ ] Resource API
+-   [ ] [Resource API](https://nakaoka-press.github.io/API-Reference/resource-api.html)
