@@ -73,7 +73,7 @@
                             "type": "string",
                             "description": "社内で扱われている製品番号。社内で利用する。"
                           },
-                          "product_name": {
+                          "name": {
                             "type": "string",
                             "description": "製品名称。取引先との間で使用する正式名称。"
                           },
@@ -236,7 +236,7 @@
                     "type": "string",
                     "description": "社内で使用する製品番号。"
                   },
-                  "product_name": {
+                  "name": {
                     "type": "string",
                     "description": "取引先との間で使用する正式な製品名称。"
                   },
@@ -271,44 +271,12 @@
                 },
                 "required": [
                   "number",
-                  "product_name",
+                  "name",
                   "client",
                   "delivery_spot",
                   "unit_weight",
                   "unit_price"
                 ]
-              },
-              "examples": {
-                "example-1": {
-                  "value": {
-                    "object_type": "string",
-                    "number": "string",
-                    "number_alias": "string",
-                    "product_name": "string",
-                    "name_alias": "string",
-                    "client": 0,
-                    "delivery_spot": "string",
-                    "snp": 0,
-                    "box": 0,
-                    "unit_weight": 0,
-                    "unit_price": 0
-                  }
-                },
-                "example-2": {
-                  "value": {
-                    "object_type": "string",
-                    "number": "string",
-                    "number_alias": "string",
-                    "product_name": "string",
-                    "name_alias": "string",
-                    "client": 0,
-                    "delivery_spot": "string",
-                    "snp": 0,
-                    "box": 0,
-                    "unit_weight": 0,
-                    "unit_price": 0
-                  }
-                }
               }
             }
           }
@@ -542,6 +510,236 @@
           },
           "description": ""
         }
+      }
+    },
+    "/v1/parts/": {
+      "get": {
+        "summary": "部材の一覧取得",
+        "tags": [
+          "parts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string"
+                    },
+                    "has_more": {
+                      "type": "boolean"
+                    },
+                    "parts": {
+                      "type": [
+                        "string",
+                        "array"
+                      ],
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "element_id": {
+                            "type": "string",
+                            "description": "エレメント固有のID"
+                          },
+                          "number": {
+                            "type": "string",
+                            "description": "部材固有の番号。取引先との間で使用する正式な番号。"
+                          },
+                          "number_alias": {
+                            "type": "string",
+                            "description": "社内で扱われている部材番号の呼称。"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "部材固有の名称。取引先との間で使用する正式な名称。"
+                          },
+                          "name_alias": {
+                            "type": "string",
+                            "description": "社内で扱われている部材名称の呼称。"
+                          },
+                          "lower_bound": {
+                            "type": "integer",
+                            "description": "在庫を保持する必要のある最低在庫数。在庫下限数。"
+                          },
+                          "standard_lot_count": {
+                            "type": "string",
+                            "description": "一度に生産する基準となる数量。標準ロット数。"
+                          },
+                          "standard_delivery_days": {
+                            "type": "string",
+                            "description": "生産するのにかかる標準の日数。標準納期。"
+                          },
+                          "require_count": {
+                            "type": "string",
+                            "description": "製品を作るのに必要な部材の数。必要数。"
+                          }
+                        }
+                      }
+                    },
+                    "parts_count": {
+                      "type": "integer",
+                      "description": "取得した配列のサイズ。"
+                    }
+                  }
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-parts",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "最大取得数"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "description": "取得位置（相対位置）"
+          }
+        ]
+      },
+      "post": {
+        "summary": "部材の新規登録",
+        "tags": [
+          "parts"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "部材を新規登録した日付"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "新規で登録した部材固有のID"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-parts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "object_type": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string",
+                    "description": "部材固有の番号。取引先との間で使用する正式な番号。"
+                  },
+                  "number_alias": {
+                    "type": "string",
+                    "description": "社内で扱われている部材番号の呼称。"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "部材固有の名称。取引先との間で使用する正式な名称。"
+                  },
+                  "name_alias": {
+                    "type": "string",
+                    "description": "社内で扱われている部材名称の呼称。"
+                  },
+                  "lower_bound": {
+                    "type": "integer",
+                    "description": "在庫を保持する必要のある最低在庫数。在庫下限数。"
+                  },
+                  "standard_lot_count": {
+                    "type": "string",
+                    "description": "一度に生産する基準となる数量。標準ロット数。"
+                  },
+                  "standard_delivery_days": {
+                    "type": "string",
+                    "description": "生産するのにかかる標準の日数。標準納期。"
+                  },
+                  "require_count": {
+                    "type": "string",
+                    "description": "製品を作るのに必要な部材の数。必要数。"
+                  }
+                },
+                "required": [
+                  "object_type",
+                  "number",
+                  "number_alias",
+                  "name",
+                  "name_alias",
+                  "lower_bound",
+                  "standard_lot_count",
+                  "standard_delivery_days",
+                  "require_count"
+                ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {}
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/v1/parts/{:parts_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": ":parts_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "特定の部材の情報取得",
+        "tags": [
+          "parts"
+        ],
+        "responses": {},
+        "operationId": "get-v1-parts-:parts_id"
+      },
+      "patch": {
+        "summary": "部材の更新",
+        "tags": [
+          "parts"
+        ],
+        "responses": {},
+        "operationId": "patch-v1-parts-:parts_id"
+      },
+      "delete": {
+        "summary": "部材の削除",
+        "tags": [
+          "parts"
+        ],
+        "responses": {},
+        "operationId": "delete-v1-parts-:parts_id"
       }
     }
   },
