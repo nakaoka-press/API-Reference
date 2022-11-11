@@ -161,7 +161,8 @@
             "name": "offset",
             "description": "取得位置（相対位置）"
           }
-        ]
+        ],
+        "description": "製品の一覧を取得する"
       },
       "post": {
         "summary": "製品の新規登録",
@@ -169,8 +170,8 @@
           "products"
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
@@ -183,7 +184,7 @@
                       "type": "string",
                       "description": "製品を新規登録した日付"
                     },
-                    "url": {
+                    "element_id": {
                       "type": "string",
                       "description": "新規で登録した製品の情報にアクセスするためのURL"
                     }
@@ -192,9 +193,9 @@
                 "examples": {
                   "Response example": {
                     "value": {
-                      "object": "product_link",
+                      "object_type": "product_created",
                       "created_at": "20221108",
-                      "url": "https://localhost:3000/v1/products/2EDE44A3-62D6-4739-A7BA-B4A51E7BA229"
+                      "element_id": "2EDE44A3-62D6-4739-A7BA-B4A51E7BA229"
                     }
                   }
                 }
@@ -292,20 +293,36 @@
                     "unit_weight": 0,
                     "unit_price": 0
                   }
+                },
+                "example-2": {
+                  "value": {
+                    "object_type": "string",
+                    "number": "string",
+                    "number_alias": "string",
+                    "product_name": "string",
+                    "name_alias": "string",
+                    "client": 0,
+                    "delivery_spot": "string",
+                    "snp": 0,
+                    "box": 0,
+                    "unit_weight": 0,
+                    "unit_price": 0
+                  }
                 }
               }
             }
           }
-        }
+        },
+        "description": "製品を新規に登録する"
       }
     },
-    "/v1/products/{product-id}": {
+    "/v1/products/{:product_id}": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
-          "name": "product-id",
+          "name": ":product_id",
           "in": "path",
           "required": true
         }
@@ -325,25 +342,65 @@
                   "type": "object",
                   "properties": {
                     "element-id": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "エレメント固有のID"
                     },
-                    "product-number": {
-                      "type": "string"
+                    "number": {
+                      "type": "string",
+                      "description": "製品固有の製品番号。取引先との間で使用する正式な番号。"
+                    },
+                    "number_alias": {
+                      "type": "string",
+                      "description": "社内で扱われている製品番号。社内で利用する。"
                     },
                     "name": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "製品固有の製品名称。取引先との間で使用する正式な名称。"
                     },
-                    "alias": {
-                      "type": "string"
+                    "name_alias": {
+                      "type": "string",
+                      "description": "社内で使われている製品名称。社内で利用する。"
                     },
-                    "snp": {
+                    "client": {
+                      "description": "取引先を示す番号。",
                       "type": "integer"
                     },
+                    "delivery_spot": {
+                      "type": "string",
+                      "description": "製品を納品する場所。納地。"
+                    },
+                    "snp": {
+                      "type": "integer",
+                      "description": "1つの梱包材に入れる数量。"
+                    },
+                    "box": {
+                      "type": "integer",
+                      "description": "梱包材の種類。"
+                    },
                     "unit-weight": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "製品の単位重量 (kg)"
                     },
                     "unit-price": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "製品の単価 (円)"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "element-id": "string",
+                      "number": "string",
+                      "number_alias": "string",
+                      "name": "string",
+                      "name_alias": "string",
+                      "client": 0,
+                      "delivery_spot": "string",
+                      "snp": 0,
+                      "box": 0,
+                      "unit-weight": 0,
+                      "unit-price": 0
                     }
                   }
                 }
@@ -363,7 +420,7 @@
               }
             }
           },
-          "description": ""
+          "description": "特定の製品情報を取得する"
         },
         "x-internal": true
       },
@@ -372,7 +429,11 @@
         "tags": [
           "products"
         ],
-        "responses": {},
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
         "operationId": "delete-v1-products-product-id"
       },
       "patch": {
@@ -380,8 +441,107 @@
         "tags": [
           "products"
         ],
-        "responses": {},
-        "operationId": "patch-v1-products-product-id"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "element_id": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "object_type": "string",
+                      "created_at": "string",
+                      "element_id": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-v1-products-product-id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "object_type": "string",
+                    "number": "string",
+                    "number_alias": "string",
+                    "product_name": "string",
+                    "name_alias": "string",
+                    "client": 0,
+                    "delivery_spot": "string",
+                    "snp": 0,
+                    "box": 0,
+                    "unit_weight": 0,
+                    "unit_price": 0
+                  }
+                },
+                "properties": {
+                  "object_type": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "number_alias": {
+                    "type": "string"
+                  },
+                  "product_name": {
+                    "type": "string"
+                  },
+                  "name_alias": {
+                    "type": "string"
+                  },
+                  "client": {
+                    "type": "integer"
+                  },
+                  "delivery_spot": {
+                    "type": "string"
+                  },
+                  "snp": {
+                    "type": "integer"
+                  },
+                  "box": {
+                    "type": "integer"
+                  },
+                  "unit_weight": {
+                    "type": "integer"
+                  },
+                  "unit_price": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "object_type",
+                  "number"
+                ]
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": ""
+        }
       }
     }
   },
