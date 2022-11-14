@@ -63,47 +63,51 @@
                         "properties": {
                           "element_id": {
                             "type": "string",
-                            "description": "エレメント固有のID"
+                            "description": "エレメント固有の識別子"
                           },
-                          "number": {
+                          "id": {
                             "type": "string",
-                            "description": "製品固有の製品番号。取引先との間で使用する正式な番号。"
+                            "description": "取引先との間で使用する製品固有の識別番号。"
                           },
-                          "number_alias": {
+                          "id_alias": {
                             "type": "string",
-                            "description": "社内で扱われている製品番号。社内で利用する。"
+                            "description": "社内で用いられる製品番号。"
                           },
                           "name": {
                             "type": "string",
-                            "description": "製品名称。取引先との間で使用する正式名称。"
+                            "description": "取引先との間で使用する製品固有の識別名称。同一名称は存在する。"
                           },
                           "name_alias": {
                             "type": "string",
-                            "description": "社内で使われている製品名称。社内で利用する。"
+                            "description": "社内で用いられる製品名称。"
                           },
-                          "client": {
-                            "type": "integer",
-                            "description": "取引先を示す番号。"
-                          },
-                          "delivery_spot": {
+                          "client_id": {
                             "type": "string",
-                            "description": "製品を納品する場所。納地。"
+                            "description": "取引先固有の識別子。"
+                          },
+                          "ship_to": {
+                            "type": "string",
+                            "description": "製品を納品する場所。"
                           },
                           "snp": {
                             "type": "integer",
-                            "description": "1つの梱包材に入れる数量。"
+                            "description": "1つの梱包材や容器に入れる製品・部材の数量。"
                           },
                           "box": {
-                            "type": "integer",
-                            "description": "梱包材の種類。"
+                            "type": "string",
+                            "description": "梱包材を識別するための識別子。"
                           },
                           "unit_weight": {
                             "type": "number",
-                            "description": "製品の単位重量（kg）。"
+                            "description": "製品の単位重量（単位：kg）。小数点4桁まで。"
                           },
                           "unit_price": {
+                            "description": "製品の単価（単位：円）。",
+                            "type": "number"
+                          },
+                          "safe_stock": {
                             "type": "number",
-                            "description": "製品の単価（円）。"
+                            "description": "在庫を保持する必要のある最低製品数。完成品安全在庫。"
                           }
                         }
                       }
@@ -211,7 +215,7 @@
                 "type": "object",
                 "x-examples": {
                   "example-1": {
-                    "object_type": "product",
+                    "element_id": "2EDE44A3-62D6-4739-A7BA-B4A51E7BA229",
                     "number": "34H0093-11",
                     "number_alias": "4H0093-11",
                     "product_name": "防振ゴム",
@@ -225,63 +229,67 @@
                   }
                 },
                 "properties": {
-                  "object_type": {
-                    "type": "string"
-                  },
-                  "number": {
+                  "id": {
                     "type": "string",
-                    "description": "取引先との間で使用する正式な製品番号。"
+                    "description": "取引先との間で使用する製品固有の識別番号。"
                   },
-                  "number_alias": {
+                  "id_alias": {
                     "type": "string",
-                    "description": "社内で使用する製品番号。"
+                    "description": "社内で用いられる製品番号。"
                   },
                   "name": {
                     "type": "string",
-                    "description": "取引先との間で使用する正式な製品名称。"
+                    "description": "取引先との間で使用する製品固有の識別名称。同一名称は存在する。"
                   },
                   "name_alias": {
                     "type": "string",
-                    "description": "社内で使用する製品名称。"
+                    "description": "社内で用いられる製品名称。"
                   },
-                  "client": {
-                    "type": "integer",
-                    "description": "取引先を示す番号。"
-                  },
-                  "delivery_spot": {
+                  "client_id": {
                     "type": "string",
-                    "description": "製品を納品する場所。納地。"
+                    "description": "取引先固有の識別子。"
+                  },
+                  "ship_to": {
+                    "type": "string",
+                    "description": "製品を納品する場所。"
                   },
                   "snp": {
                     "type": "integer",
-                    "description": "1つの梱包材に入れる数量。"
+                    "description": "1つの梱包材や容器に入れる製品・部材の数量。"
                   },
                   "box": {
                     "type": "integer",
-                    "description": "梱包材の種類。"
+                    "description": "梱包材を識別するための識別子。"
                   },
                   "unit_weight": {
                     "type": "number",
-                    "description": "製品の単位重量（kg）。"
+                    "description": "製品の単位重量（単位：kg）。小数点4桁まで。"
                   },
                   "unit_price": {
                     "type": "number",
-                    "description": "製品の単価（円）。"
+                    "description": "製品の単価（単位：円）。"
+                  },
+                  "safe_stock": {
+                    "type": "integer",
+                    "description": "在庫を保持する必要のある最低製品数。完成品安全在庫。"
                   }
                 },
                 "required": [
-                  "number",
+                  "id",
                   "name",
-                  "client",
-                  "delivery_spot",
+                  "client_id",
+                  "ship_to",
+                  "snp",
+                  "box",
                   "unit_weight",
-                  "unit_price"
+                  "unit_price",
+                  "safe_stock"
                 ]
               }
             }
           }
         },
-        "description": "製品を新規に登録する"
+        "description": "製品を新規に登録する。"
       }
     },
     "/v1/products/{:product_id}": {
@@ -309,49 +317,53 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "element-id": {
+                    "element_id": {
                       "type": "string",
-                      "description": "エレメント固有のID"
+                      "description": "エレメント固有の識別子"
                     },
-                    "number": {
+                    "id": {
                       "type": "string",
-                      "description": "製品固有の製品番号。取引先との間で使用する正式な番号。"
+                      "description": "取引先との間で使用する製品固有の識別番号。"
                     },
-                    "number_alias": {
+                    "id_alias": {
                       "type": "string",
-                      "description": "社内で扱われている製品番号。社内で利用する。"
+                      "description": "社内で用いられる製品番号。"
                     },
                     "name": {
                       "type": "string",
-                      "description": "製品固有の製品名称。取引先との間で使用する正式な名称。"
+                      "description": "取引先との間で使用する製品固有の識別名称。同一名称は存在する。"
                     },
                     "name_alias": {
                       "type": "string",
-                      "description": "社内で使われている製品名称。社内で利用する。"
+                      "description": "社内で用いられる製品名称。"
                     },
-                    "client": {
-                      "description": "取引先を示す番号。",
-                      "type": "integer"
+                    "client_id": {
+                      "description": "取引先固有の識別子。",
+                      "type": "string"
                     },
-                    "delivery_spot": {
+                    "ship_to": {
                       "type": "string",
-                      "description": "製品を納品する場所。納地。"
+                      "description": "製品を納品する場所。"
                     },
                     "snp": {
                       "type": "integer",
-                      "description": "1つの梱包材に入れる数量。"
+                      "description": "1つの梱包材や容器に入れる製品・部材の数量。"
                     },
                     "box": {
-                      "type": "integer",
-                      "description": "梱包材の種類。"
+                      "type": "string",
+                      "description": "梱包材を識別するための識別子。"
                     },
                     "unit-weight": {
                       "type": "number",
-                      "description": "製品の単位重量 (kg)"
+                      "description": "製品の単位重量（単位：kg）。小数点4桁まで。"
                     },
                     "unit-price": {
                       "type": "number",
-                      "description": "製品の単価 (円)"
+                      "description": "製品の単価（単位：円）。"
+                    },
+                    "safe_stock": {
+                      "type": "integer",
+                      "description": "在庫を保持する必要のある最低製品数。完成品安全在庫。"
                     }
                   }
                 },
@@ -378,13 +390,12 @@
         },
         "operationId": "get-v1-products-product-id",
         "parameters": [],
-        "description": "",
+        "description": "特定の製品の情報を取得する。",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {}
+                "type": "object"
               }
             }
           },
@@ -402,7 +413,8 @@
             "description": "No Content"
           }
         },
-        "operationId": "delete-v1-products-product-id"
+        "operationId": "delete-v1-products-product-id",
+        "description": "製品番号をパスパラメータに指定、登録された製品を削除する。"
       },
       "patch": {
         "summary": "製品の更新",
@@ -416,22 +428,25 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "object_type": {
-                      "type": "string"
-                    },
-                    "created_at": {
-                      "type": "string"
-                    },
-                    "element_id": {
-                      "type": "string"
-                    }
-                  },
                   "x-examples": {
                     "example-1": {
                       "object_type": "string",
                       "created_at": "string",
                       "element_id": "string"
+                    }
+                  },
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "製品を更新した日付。"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子"
                     }
                   }
                 }
@@ -461,43 +476,53 @@
                   }
                 },
                 "properties": {
-                  "object_type": {
-                    "type": "string"
+                  "id": {
+                    "type": "string",
+                    "description": "取引先との間で使用する製品固有の識別番号。"
                   },
-                  "number": {
-                    "type": "string"
+                  "id_alias": {
+                    "type": "string",
+                    "description": "社内で用いられる製品番号。"
                   },
-                  "number_alias": {
-                    "type": "string"
-                  },
-                  "product_name": {
-                    "type": "string"
+                  "name": {
+                    "type": "string",
+                    "description": "取引先との間で使用する製品固有の識別名称。同一名称は存在する。"
                   },
                   "name_alias": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "社内で用いられる製品名称。"
                   },
-                  "client": {
-                    "type": "integer"
+                  "client_id": {
+                    "type": "integer",
+                    "description": "取引先固有の識別子。"
                   },
-                  "delivery_spot": {
-                    "type": "string"
+                  "ship_to": {
+                    "type": "string",
+                    "description": "製品を納品する場所。"
                   },
                   "snp": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "1つの梱包材や容器に入れる製品・部材の数量。"
                   },
                   "box": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "梱包材を識別するための識別子。"
                   },
                   "unit_weight": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "製品の単位重量（単位：kg）。小数点4桁まで。"
                   },
                   "unit_price": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "製品の単価（単位：円）。"
+                  },
+                  "safe_stock": {
+                    "type": "integer",
+                    "description": "在庫を保持する必要のある最低製品数。完成品安全在庫数。"
                   }
                 },
                 "required": [
-                  "object_type",
-                  "number"
+                  "id"
                 ]
               }
             },
@@ -509,7 +534,8 @@
             }
           },
           "description": ""
-        }
+        },
+        "description": ""
       }
     },
     "/v1/parts/": {
@@ -527,16 +553,19 @@
                   "type": "object",
                   "properties": {
                     "object_type": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "レスポンスの種類"
                     },
                     "has_more": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "より多くの部材情報があるかどうかの真偽値。`false`であればリストの末尾。"
                     },
                     "parts": {
                       "type": [
                         "string",
                         "array"
                       ],
+                      "description": "取得した部材情報の配列（ページネーションにより取得数が変動する）",
                       "items": {
                         "type": "object",
                         "properties": {
