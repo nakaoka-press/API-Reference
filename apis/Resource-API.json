@@ -565,15 +565,15 @@
                             "description": "在庫を保持する必要のある最低在庫数。在庫下限数。"
                           },
                           "standard_lot_count": {
-                            "type": "string",
-                            "description": "一度に生産する基準となる数量。標準ロット数。"
+                            "description": "一度に生産する基準となる数量。標準ロット数。",
+                            "type": "integer"
                           },
                           "standard_delivery_days": {
-                            "type": "string",
-                            "description": "生産するのにかかる標準の日数。標準納期。"
+                            "description": "生産するのにかかる標準の日数。標準納期。",
+                            "type": "integer"
                           },
                           "require_count": {
-                            "type": "string",
+                            "type": "integer",
                             "description": "製品を作るのに必要な部材の数。必要数。"
                           }
                         }
@@ -723,7 +723,75 @@
           "parts"
         ],
         "responses": {},
-        "operationId": "get-v1-parts-:parts_id"
+        "operationId": "get-v1-parts-:parts_id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "object_type": {
+                    "type": "string"
+                  },
+                  "element_id": {
+                    "type": "string",
+                    "description": "エレメント固有のID"
+                  },
+                  "number": {
+                    "type": "string",
+                    "description": "部材固有の番号。取引先との間で使用する正式な番号。"
+                  },
+                  "number_alias": {
+                    "type": "string",
+                    "description": "社内で扱われている部材番号。"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "部材固有の名称。取引先との間で使用する正式な名称。"
+                  },
+                  "name_alias": {
+                    "type": "string",
+                    "description": "社内で使われている部材名称。"
+                  },
+                  "lower_bound": {
+                    "type": "integer",
+                    "description": "在庫を保持する必要のある最低在庫数。在庫下限数。"
+                  },
+                  "standard_lot_count": {
+                    "type": "integer",
+                    "description": "一度に生産する基準となる数量。標準ロット数。"
+                  },
+                  "standard_delivery_days": {
+                    "type": "integer",
+                    "description": "生産するのにかかる標準の日数。標準納期。"
+                  },
+                  "require_count": {
+                    "type": "integer",
+                    "description": "製品を作るのに必要な部材の数。必要数"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "object_type": "string",
+                    "element_id": "string",
+                    "number": "string",
+                    "number_alias": "string",
+                    "name": "string",
+                    "name_alias": "string",
+                    "lower_bound": 0,
+                    "standard_lot_count": 0,
+                    "standard_delivery_days": 0,
+                    "require_count": 0
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": []
       },
       "patch": {
         "summary": "部材の更新",
@@ -731,14 +799,70 @@
           "parts"
         ],
         "responses": {},
-        "operationId": "patch-v1-parts-:parts_id"
+        "operationId": "patch-v1-parts-:parts_id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "object_type": "string",
+                    "element_id": "string",
+                    "number": "string",
+                    "number_alias": "string",
+                    "name": "string",
+                    "name_alias": "string",
+                    "lower_bound": 0,
+                    "standard_lot_count": 0,
+                    "standard_delivery_days": 0,
+                    "require_count": 0
+                  }
+                },
+                "properties": {
+                  "number": {
+                    "type": "string"
+                  },
+                  "number_alias": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "name_alias": {
+                    "type": "string"
+                  },
+                  "lower_bound": {
+                    "type": "integer"
+                  },
+                  "standard_lot_count": {
+                    "type": "integer"
+                  },
+                  "standard_delivery_days": {
+                    "type": "integer"
+                  },
+                  "require_count": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "number"
+                ]
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "部材の削除",
         "tags": [
           "parts"
         ],
-        "responses": {},
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
         "operationId": "delete-v1-parts-:parts_id"
       }
     }
