@@ -14,7 +14,13 @@ Open API jsonファイルからHTMLを生成するコマンドラインツール
 
 ## Usage
 
-    $ redoc-cli build {api}.json -o index.html
+To create html file, execute these commands:
+
+```sh
+$ git clone https://github.com/nakaoka-press/API-Reference.git
+$ cd API-Reference
+$ bash ./scripts/run.sh
+```
 
 ## API Reference
 
