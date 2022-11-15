@@ -145,7 +145,7 @@
             "description": "取得位置（相対位置）"
           }
         ],
-        "description": "製品の一覧を取得する"
+        "description": "取引先に納品する製品を配列形式で取得します"
       },
       "post": {
         "summary": "製品の新規登録",
@@ -264,7 +264,7 @@
             }
           }
         },
-        "description": "製品を新規に登録する。"
+        "description": "取引先に納品する製品を新規に登録します"
       },
       "parameters": []
     },
@@ -351,7 +351,7 @@
         },
         "operationId": "get-v1-products-product-id",
         "parameters": [],
-        "description": "特定の製品の情報を取得する。",
+        "description": "取引先に納品する製品の製品番号を用いて、特定の製品情報を取得します",
         "requestBody": {
           "content": {
             "application/json": {
@@ -375,7 +375,7 @@
           }
         },
         "operationId": "delete-v1-products-product-id",
-        "description": "製品番号をパスパラメータに指定、登録された製品を削除する。"
+        "description": "取引先に納品する製品の製品番号を用いて、特定の製品情報を削除します"
       },
       "patch": {
         "summary": "製品の更新",
@@ -509,7 +509,7 @@
           },
           "description": ""
         },
-        "description": "",
+        "description": "取引先に納品する製品の製品番号を用いて、特定の製品情報を更新します",
         "parameters": []
       }
     },
@@ -618,7 +618,7 @@
             "description": "取得位置（相対位置）"
           }
         ],
-        "description": "部材の一覧を取得する"
+        "description": "部材（プレス部材・購入部品・支給部品）に関する情報を配列形式で取得します"
       },
       "post": {
         "summary": "部材の新規登録",
@@ -733,7 +733,8 @@
             }
           },
           "description": ""
-        }
+        },
+        "description": "部材（プレス部材・購入部品・支給部品）に関する情報を新規で登録します"
       },
       "parameters": []
     },
@@ -829,7 +830,8 @@
           }
         },
         "operationId": "get-v1-parts-:parts_id",
-        "parameters": []
+        "parameters": [],
+        "description": "特定の部材に関する情報を取得します"
       },
       "patch": {
         "summary": "部材の更新",
@@ -941,7 +943,8 @@
               }
             }
           }
-        }
+        },
+        "description": "特定の部材に関する情報を更新します"
       },
       "delete": {
         "summary": "部材の削除",
@@ -954,7 +957,7 @@
           }
         },
         "operationId": "delete-v1-parts-:parts_id",
-        "description": ""
+        "description": "特定の部材に関する情報を削除します"
       }
     },
     "/v1/materials": {
@@ -1077,7 +1080,8 @@
             }
           }
         },
-        "operationId": "get-v1-materials"
+        "operationId": "get-v1-materials",
+        "description": "プレス部材の材料に関する情報を配列形式で取得します"
       },
       "post": {
         "summary": "材料の新規登録",
@@ -1217,7 +1221,8 @@
               "examples": {}
             }
           }
-        }
+        },
+        "description": "プレス部材の材料に関する情報を新規で登録します"
       },
       "parameters": []
     },
@@ -1359,7 +1364,8 @@
               }
             }
           }
-        }
+        },
+        "description": "特定の材料に関する情報を更新します"
       },
       "delete": {
         "summary": "材料の削除",
@@ -1371,7 +1377,8 @@
             "description": "No Content"
           }
         },
-        "operationId": "delete-v1-materials-material_id"
+        "operationId": "delete-v1-materials-material_id",
+        "description": "特定の材料に関する情報を削除します"
       },
       "get": {
         "summary": "特定の材料情報の取得",
@@ -1465,11 +1472,310 @@
             }
           }
         },
-        "operationId": "get-v1-materials-material_id"
+        "operationId": "get-v1-materials-material_id",
+        "description": "特定の材料に関する情報を取得します"
+      }
+    },
+    "/v1/processes": {
+      "post": {
+        "summary": "工程の新規登録",
+        "tags": [
+          "processes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程を新規登録した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "工程固有の識別子。`/v1/processes/{process_id}`で新規登録した工程の情報を取得する。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-processes",
+        "description": "製品を加工する工程（プロセス）を新規で登録します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "process_id": "string",
+                    "product_id": "string",
+                    "part_id": "string",
+                    "class": "string",
+                    "step": 0,
+                    "name": "string",
+                    "site": "string"
+                  }
+                },
+                "properties": {
+                  "process_id": {
+                    "type": "string",
+                    "description": "プロセス固有の識別子"
+                  },
+                  "product_id": {
+                    "type": "string",
+                    "description": "取引先との間で使用する製品固有の識別番号。"
+                  },
+                  "part_id": {
+                    "type": "string",
+                    "description": "取引先との間で使用する部材固有の識別番号。"
+                  },
+                  "class": {
+                    "type": "string",
+                    "description": "工程大区分　プレス　機械加工　組立加工　外注加工"
+                  },
+                  "step": {
+                    "type": "integer",
+                    "description": "工程の手順。"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "工程の名称。"
+                  },
+                  "site": {
+                    "type": "string",
+                    "description": "工程を実施する拠点の識別子。"
+                  }
+                },
+                "required": [
+                  "process_id"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "工程の一覧取得",
+        "tags": [
+          "processes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "has_more": {
+                      "type": "string",
+                      "description": "より多くの工程情報があるかどうかの真偽値。falseであればリストの末尾。"
+                    },
+                    "processes": {
+                      "type": "array",
+                      "description": "取得した工程情報の配列",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "process_id": {
+                            "type": "string",
+                            "description": "プロセス固有の識別子"
+                          },
+                          "product_id": {
+                            "type": "string",
+                            "description": "取引先との間で使用する製品固有の識別番号。"
+                          },
+                          "part_id": {
+                            "type": "string",
+                            "description": "取引先との間で使用する部材固有の識別番号。"
+                          },
+                          "class": {
+                            "type": "string",
+                            "description": "工程大区分（プレス・機械加工・組立加工・外注加工）"
+                          },
+                          "step": {
+                            "type": "integer",
+                            "description": "工程の手順"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "工程の名称。"
+                          },
+                          "site": {
+                            "type": "string",
+                            "description": "工程を実施する拠点の識別子。"
+                          }
+                        }
+                      }
+                    },
+                    "array_length": {
+                      "type": "string",
+                      "description": "取得した配列のサイズ"
+                    }
+                  }
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-processes",
+        "description": "製品を加工する工程（プロセス）を一覧形式で取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "最大取得数"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "description": "取得位置（相対位置）"
+          }
+        ]
+      }
+    },
+    "/v1/processes/{process_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "process_id",
+          "in": "path",
+          "required": true,
+          "description": "工程番号"
+        }
+      ],
+      "get": {
+        "summary": "特定の工程の情報取得",
+        "tags": [
+          "processes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "process_id": {
+                      "type": "string"
+                    },
+                    "product_id": {
+                      "type": "string"
+                    },
+                    "part_id": {
+                      "type": "string"
+                    },
+                    "class": {
+                      "type": "string"
+                    },
+                    "step": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "site": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "process_id": "string",
+                      "product_id": "string",
+                      "part_id": "string",
+                      "class": "string",
+                      "step": 0,
+                      "name": "string",
+                      "site": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-processes-process_id",
+        "description": "特定の工程（プロセス）の情報を取得します"
+      },
+      "patch": {
+        "summary": "工程の更新",
+        "tags": [
+          "processes"
+        ],
+        "responses": {},
+        "operationId": "patch-v1-processes-process_id",
+        "description": "特定の工程（プロセス）の情報を更新します"
+      },
+      "delete": {
+        "summary": "工程の削除",
+        "tags": [
+          "processes"
+        ],
+        "responses": {},
+        "operationId": "delete-v1-processes-process_id",
+        "description": "特定の工程（プロセス）の情報を削除します"
       }
     }
   },
   "components": {
-    "schemas": {}
-  }
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "tags": [
+    {
+      "name": "clients"
+    },
+    {
+      "name": "machines"
+    },
+    {
+      "name": "materials"
+    },
+    {
+      "name": "parts"
+    },
+    {
+      "name": "process-input"
+    },
+    {
+      "name": "process-machine"
+    },
+    {
+      "name": "process-output"
+    },
+    {
+      "name": "processes"
+    },
+    {
+      "name": "products"
+    },
+    {
+      "name": "sites"
+    }
+  ]
 }
