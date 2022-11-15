@@ -1503,7 +1503,8 @@
                       "description": "工程固有の識別子。`/v1/processes/{process_id}`で新規登録した工程の情報を取得する。"
                     }
                   }
-                }
+                },
+                "examples": {}
               }
             }
           }
@@ -1680,29 +1681,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "process_id": {
-                      "type": "string"
-                    },
-                    "product_id": {
-                      "type": "string"
-                    },
-                    "part_id": {
-                      "type": "string"
-                    },
-                    "class": {
-                      "type": "string"
-                    },
-                    "step": {
-                      "type": "integer"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "site": {
-                      "type": "string"
-                    }
-                  },
                   "x-examples": {
                     "example-1": {
                       "process_id": "string",
@@ -1712,6 +1690,36 @@
                       "step": 0,
                       "name": "string",
                       "site": "string"
+                    }
+                  },
+                  "properties": {
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子"
+                    },
+                    "product_id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する製品固有の識別番号。"
+                    },
+                    "part_id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する部材固有の識別番号。"
+                    },
+                    "class": {
+                      "type": "string",
+                      "description": "工程大区分（プレス・機械加工・組立加工・外注加工）"
+                    },
+                    "step": {
+                      "type": "integer",
+                      "description": "工程の手順。"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "工程の名称。"
+                    },
+                    "site": {
+                      "type": "string",
+                      "description": "工程を実施する拠点の識別子。"
                     }
                   }
                 }
@@ -1727,16 +1735,105 @@
         "tags": [
           "processes"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "object_type": "string",
+                      "created_at": "string",
+                      "process_id": "string"
+                    }
+                  },
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程を更新した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "patch-v1-processes-process_id",
-        "description": "特定の工程（プロセス）の情報を更新します"
+        "description": "特定の工程（プロセス）の情報を更新します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "process_id": "string",
+                    "product_id": "string",
+                    "part_id": "string",
+                    "class": "string",
+                    "step": 0,
+                    "name": "string",
+                    "site": "string"
+                  }
+                },
+                "properties": {
+                  "process_id": {
+                    "type": "string",
+                    "description": "プロセス固有の識別子"
+                  },
+                  "product_id": {
+                    "type": "string",
+                    "description": "取引先との間で使用する製品固有の識別番号。"
+                  },
+                  "part_id": {
+                    "type": "string",
+                    "description": "取引先との間で使用する部材固有の識別番号。"
+                  },
+                  "class": {
+                    "type": "string",
+                    "description": "工程大区分（プレス・機械加工・組立加工・外注加工）"
+                  },
+                  "step": {
+                    "type": "integer",
+                    "description": "工程の手順。"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "工程の名称。"
+                  },
+                  "site": {
+                    "type": "string",
+                    "description": "工程を実施する拠点の識別子。"
+                  }
+                },
+                "required": [
+                  "process_id"
+                ]
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "工程の削除",
         "tags": [
           "processes"
         ],
-        "responses": {},
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
         "operationId": "delete-v1-processes-process_id",
         "description": "特定の工程（プロセス）の情報を削除します"
       }
