@@ -1965,7 +1965,8 @@
                 },
                 "required": [
                   "process_id",
-                  "element_id"
+                  "element_id",
+                  "size"
                 ]
               },
               "examples": {}
@@ -2122,6 +2123,135 @@
         },
         "operationId": "delete-processes-process_id-inputs-element_id",
         "description": "ある工程に必要な特定の部材情報を削除します"
+      }
+    },
+    "/v1/processes/{process_id}/outputs": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "process_id",
+          "in": "path",
+          "required": true,
+          "description": "プロセス固有の識別子"
+        }
+      ],
+      "get": {
+        "summary": "工程におけるアウトプットの一覧取得",
+        "tags": [
+          "process-output"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string"
+                    },
+                    "outputs": {
+                      "type": "array",
+                      "description": "取得した工程におけるアウトプットの配列",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "process_id": {
+                            "type": "string",
+                            "description": "プロセス固有の識別子。"
+                          },
+                          "element_id": {
+                            "type": "string",
+                            "description": "エレメント固有の識別子。プロセスで作られるエレメント。"
+                          },
+                          "size": {
+                            "type": "integer",
+                            "description": "プロセスによって作られるエレメントの数量。"
+                          }
+                        }
+                      }
+                    },
+                    "array_length": {
+                      "type": "string",
+                      "description": "取得した配列のサイズ"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-processes-process_id-outputs",
+        "description": "ある工程で作られる部材情報を一覧形式で取得します"
+      },
+      "post": {
+        "summary": "工程におけるアウトプットの新規登録",
+        "tags": [
+          "process-output"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程におけるアウトプットを新規登録した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-processes-process_id-outputs",
+        "description": "ある工程で作られる部材情報を新規で登録します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "process_id": {
+                    "type": "string",
+                    "description": "プロセス固有の識別子。"
+                  },
+                  "element_id": {
+                    "type": "string",
+                    "description": "エレメント固有の識別子。プロセスで作られるエレメント。"
+                  },
+                  "size": {
+                    "type": "integer",
+                    "description": "プロセスによって作られるエレメントの数量。"
+                  }
+                },
+                "required": [
+                  "process_id",
+                  "element_id",
+                  "size"
+                ]
+              }
+            }
+          }
+        }
       }
     }
   },
