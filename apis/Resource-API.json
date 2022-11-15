@@ -5,7 +5,9 @@
   },
   "info": {
     "title": "Resource API",
-    "version": "1.0"
+    "version": "1.0",
+    "summary": "API for resource data",
+    "description": "API for resource management service."
   },
   "servers": [
     {
@@ -13,7 +15,7 @@
     }
   ],
   "paths": {
-    "/v1/products/": {
+    "/v1/products": {
       "get": {
         "summary": "製品の一覧取得",
         "tags": [
@@ -112,7 +114,7 @@
                         }
                       }
                     },
-                    "products_count": {
+                    "array_length": {
                       "type": "integer",
                       "description": "取得した配列のサイズ。"
                     }
@@ -167,19 +169,15 @@
                     },
                     "element_id": {
                       "type": "string",
-                      "description": "新規で登録した製品の情報にアクセスするためのURL"
+                      "description": "エレメント固有の識別子。`/v1/elements/{element_id}`で新規登録したエレメントの情報を取得する。"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する製品固有の識別番号。`/v1/products/{id}`で新規登録した製品情報を取得する。"
                     }
                   }
                 },
-                "examples": {
-                  "Response example": {
-                    "value": {
-                      "object_type": "product_created",
-                      "created_at": "20221108",
-                      "element_id": "2EDE44A3-62D6-4739-A7BA-B4A51E7BA229"
-                    }
-                  }
-                }
+                "examples": {}
               }
             }
           }
@@ -267,15 +265,16 @@
           }
         },
         "description": "製品を新規に登録する。"
-      }
+      },
+      "parameters": []
     },
-    "/v1/products/{:product_id}": {
+    "/v1/products/{product_id}": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
-          "name": ":product_id",
+          "name": "product_id",
           "in": "path",
           "required": true,
           "description": "製品番号"
@@ -351,17 +350,7 @@
           }
         },
         "operationId": "get-v1-products-product-id",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "product_id",
-            "description": "製品番号",
-            "required": true
-          }
-        ],
+        "parameters": [],
         "description": "特定の製品の情報を取得する。",
         "requestBody": {
           "content": {
@@ -419,6 +408,10 @@
                     "element_id": {
                       "type": "string",
                       "description": "エレメント固有の識別子"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する製品固有の識別番号。`/v1/products/{id}`で更新した製品情報を取得する。"
                     }
                   }
                 },
@@ -520,7 +513,7 @@
         "parameters": []
       }
     },
-    "/v1/parts/": {
+    "/v1/parts": {
       "get": {
         "summary": "部材の一覧取得",
         "tags": [
@@ -595,36 +588,13 @@
                         }
                       }
                     },
-                    "parts_count": {
+                    "array_length": {
                       "type": "integer",
                       "description": "取得した配列のサイズ。"
                     }
                   }
                 },
-                "examples": {
-                  "example-1": {
-                    "value": {
-                      "object_type": "string",
-                      "has_more": true,
-                      "parts": [
-                        {
-                          "element_id": "string",
-                          "kind": "string",
-                          "id": "string",
-                          "id_alias": "string",
-                          "name": "string",
-                          "name_alias": "string",
-                          "lower_bound": 0,
-                          "standard_lot": 0,
-                          "period_day": 0,
-                          "client_id": "string",
-                          "unit_weight": "string"
-                        }
-                      ],
-                      "parts_count": 0
-                    }
-                  }
-                }
+                "examples": {}
               }
             }
           }
@@ -673,10 +643,15 @@
                     },
                     "element_id": {
                       "type": "string",
-                      "description": "新規で登録した部材固有のID"
+                      "description": "エレメント固有の識別子。`/v1/elements/{element_id}`で新規登録したエレメントの情報を取得する。"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する部材固有の識別番号。`/v1/parts/{id}`で新規登録した部材情報を取得する。"
                     }
                   }
-                }
+                },
+                "examples": {}
               }
             }
           }
@@ -754,25 +729,21 @@
                   "client_id",
                   "unit_weight"
                 ]
-              },
-              "examples": {
-                "example-1": {
-                  "value": {}
-                }
               }
             }
           },
           "description": ""
         }
-      }
+      },
+      "parameters": []
     },
-    "/v1/parts/{:parts_id}": {
+    "/v1/parts/{parts_id}": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
-          "name": ":parts_id",
+          "name": "parts_id",
           "in": "path",
           "required": true,
           "description": "部材番号"
@@ -890,7 +861,11 @@
                     },
                     "element_id": {
                       "type": "string",
-                      "description": "エレメント固有の識別子"
+                      "description": "エレメント固有の識別子。`/v1/elements/{element_id}`で更新したエレメントの情報を取得する。"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する部材固有の識別番号。`/v1/parts/{id}`で更新した部材の情報を取得する。"
                     }
                   }
                 }
@@ -982,7 +957,7 @@
         "description": ""
       }
     },
-    "/v1/materials/": {
+    "/v1/materials": {
       "get": {
         "summary": "材料の一覧取得",
         "tags": [
@@ -1019,13 +994,16 @@
                   },
                   "properties": {
                     "object_type": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "レスポンスの種類"
                     },
                     "has_more": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "より多くの製品情報があるかどうかの真偽値。`false`であればリストの末尾。"
                     },
-                    "parts": {
+                    "materials": {
                       "type": "array",
+                      "description": "取得した材料情報の配列",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -1088,11 +1066,13 @@
                         }
                       }
                     },
-                    "array_count": {
-                      "type": "integer"
+                    "array_length": {
+                      "type": "integer",
+                      "description": "取得した配列のサイズ。"
                     }
                   }
-                }
+                },
+                "examples": {}
               }
             }
           }
@@ -1104,8 +1084,388 @@
         "tags": [
           "materials"
         ],
-        "responses": {},
-        "operationId": "post-v1-materials"
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "object_type": "string",
+                      "created_at": "string",
+                      "element_id": "string",
+                      "id": "string"
+                    }
+                  },
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "製品を新規登録した日付"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子。`/v1/elements/{element_id}`で新規登録した材料の情報を取得する。"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する部材固有の識別番号。`/v1/materials/{id}`で新規登録した材料情報を取得する。"
+                    }
+                  }
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-materials",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "element_id": "string",
+                    "id": "string",
+                    "kind": "string",
+                    "client_id": "string",
+                    "mode": "string",
+                    "code": "string",
+                    "type": "string",
+                    "thickness": 0,
+                    "width": 0,
+                    "height": 0,
+                    "input_weight": "string",
+                    "input_count": "string",
+                    "ship_from": "string",
+                    "ship_to": "string"
+                  }
+                },
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "材料から作る部材（プレス部材のみ）の番号"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "コイル・板材を区別するための番号。"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "description": "取引先との間で使用する部材固有の識別番号。"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "description": "支給材・自達などの調達方法を区別するための番号。"
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "支給材の材質コード（PKKのみ、4桁整数列）"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "材料の材質"
+                  },
+                  "thickness": {
+                    "type": "integer",
+                    "description": "材料の板の厚さ（単位：mm、小数点2桁）"
+                  },
+                  "width": {
+                    "type": "integer",
+                    "description": "材料の幅（単位：mm、小数点1桁）"
+                  },
+                  "height": {
+                    "type": "integer",
+                    "description": "材料の長さ（単位：mm、小数点1桁）、コイルの場合は無し。"
+                  },
+                  "input_weight": {
+                    "type": "string",
+                    "description": "一つの部材を作るのに使用する重量。"
+                  },
+                  "input_count": {
+                    "type": "string",
+                    "description": "一つの板材から取ることのできる数量。"
+                  },
+                  "ship_from": {
+                    "type": "string",
+                    "description": "日鉄物産や大東工業などの材料の購入先の識別子。"
+                  },
+                  "ship_to": {
+                    "type": "string",
+                    "description": "千葉工場や本社工場などの材料を受け入れる場所。"
+                  }
+                },
+                "required": [
+                  "id",
+                  "kind",
+                  "client_id",
+                  "mode",
+                  "type",
+                  "thickness",
+                  "width",
+                  "height",
+                  "ship_from",
+                  "ship_to"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/v1/materials/{material_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "material_id",
+          "in": "path",
+          "required": true,
+          "description": "材料から作る部材（プレス部材のみ）の番号"
+        }
+      ],
+      "patch": {
+        "summary": "材料の更新",
+        "tags": [
+          "materials"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "object_type": "string",
+                      "created_at": "string",
+                      "element_id": "string",
+                      "id": "string"
+                    }
+                  },
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "材料を更新した日付。"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子。`/v1/elements/{element_id}`で更新した材料の情報を取得する。"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "材料から作る部材（プレス部材のみ）の番号。`/v1/materials/{id}`で新規登録した材料情報を取得する。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-v1-materials-material_id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "id": "string",
+                    "kind": "string",
+                    "client_id": "string",
+                    "mode": "string",
+                    "code": "string",
+                    "type": "string",
+                    "thickness": 0,
+                    "width": 0,
+                    "height": 0,
+                    "input_weight": "string",
+                    "input_count": "string",
+                    "ship_from": "string",
+                    "ship_to": "string"
+                  }
+                },
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "材料から作る部材（プレス部材のみ）の番号"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "コイル・板材を区別するための番号。"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "description": "取引先との間で使用する部材固有の識別番号。"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "description": "支給材・自達などの調達方法を区別するための番号。"
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "支給材の材質コード（PKKのみ、4桁整数列）"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "材料の材質"
+                  },
+                  "thickness": {
+                    "type": "integer",
+                    "description": "材料の板の厚さ（単位：mm、小数点2桁）材料の板の厚さ（単位：mm、小数点2桁）"
+                  },
+                  "width": {
+                    "type": "integer",
+                    "description": "材料の幅（単位：mm、小数点1桁）"
+                  },
+                  "height": {
+                    "type": "integer",
+                    "description": "材料の長さ（単位：mm、小数点1桁）、コイルの場合は無し。"
+                  },
+                  "input_weight": {
+                    "type": "string",
+                    "description": "一つの部材を作るのに使用する重量。"
+                  },
+                  "input_count": {
+                    "type": "string",
+                    "description": "一つの板材から取ることのできる数量。"
+                  },
+                  "ship_from": {
+                    "type": "string",
+                    "description": "日鉄物産や大東工業などの材料の購入先の識別子。"
+                  },
+                  "ship_to": {
+                    "type": "string",
+                    "description": "千葉工場や本社工場などの材料を受け入れる場所。"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "材料の削除",
+        "tags": [
+          "materials"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete-v1-materials-material_id"
+      },
+      "get": {
+        "summary": "特定の材料情報の取得",
+        "tags": [
+          "materials"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "id": "string",
+                      "kind": "string",
+                      "client_id": "string",
+                      "mode": "string",
+                      "code": "string",
+                      "type": "string",
+                      "thickness": 0,
+                      "width": 0,
+                      "height": 0,
+                      "input_weight": "string",
+                      "input_count": "string",
+                      "ship_from": "string",
+                      "ship_to": "string"
+                    }
+                  },
+                  "properties": {
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "材料から作る部材（プレス部材のみ）の番号"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "description": "コイル・板材を区別するための番号。"
+                    },
+                    "client_id": {
+                      "type": "string",
+                      "description": "取引先との間で使用する部材固有の識別番号。"
+                    },
+                    "mode": {
+                      "type": "string",
+                      "description": "支給材・自達などの調達方法を区別するための番号。"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "支給材の材質コード（PKKのみ、4桁整数列）"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "材料の材質"
+                    },
+                    "thickness": {
+                      "type": "integer",
+                      "description": "材料の板の厚さ（単位：mm、小数点2桁）"
+                    },
+                    "width": {
+                      "type": "integer",
+                      "description": "材料の幅（単位：mm、小数点1桁）"
+                    },
+                    "height": {
+                      "type": "integer",
+                      "description": "材料の長さ（単位：mm、小数点1桁）、コイルの場合は無し。"
+                    },
+                    "input_weight": {
+                      "type": "string",
+                      "description": "一つの部材を作るのに使用する重量。"
+                    },
+                    "input_count": {
+                      "type": "string",
+                      "description": "一つの板材から取ることのできる数量。"
+                    },
+                    "ship_from": {
+                      "type": "string",
+                      "description": "日鉄物産や大東工業などの材料の購入先の識別子。"
+                    },
+                    "ship_to": {
+                      "type": "string",
+                      "description": "千葉工場や本社工場などの材料を受け入れる場所。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-materials-material_id"
       }
     }
   },

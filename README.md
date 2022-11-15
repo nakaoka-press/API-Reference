@@ -26,4 +26,12 @@ $ bash ./scripts/run.sh
 
 -   [ ] [Resource API](https://nakaoka-press.github.io/API-Reference/resource-api.html)
     -   [x] Products
-    -   [ ] Parts
+    -   [x] Parts
+    -   [x] Materials
+    -   [ ] Processes
+        -   [ ] Process input
+        -   [ ] Process output
+        -   [ ] Machines
+    -   [ ] Machines
+    -   [ ] Site
+    -   [ ] Clients
