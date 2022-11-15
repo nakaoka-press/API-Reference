@@ -1837,6 +1837,292 @@
         "operationId": "delete-v1-processes-process_id",
         "description": "特定の工程（プロセス）の情報を削除します"
       }
+    },
+    "/v1/processes/{process_id}/inputs": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "process_id",
+          "in": "path",
+          "required": true,
+          "description": "プロセス固有の識別子"
+        }
+      ],
+      "get": {
+        "summary": "工程におけるインプットの一覧取得",
+        "tags": [
+          "process-input"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "inputs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "process_id": {
+                            "type": "string",
+                            "description": "プロセス固有の識別子。"
+                          },
+                          "element_id": {
+                            "type": "string",
+                            "description": "エレメント固有の識別子。プロセスに必要なエレメント。"
+                          },
+                          "size": {
+                            "type": "integer",
+                            "description": "プロセスに必要なエレメントの数量。"
+                          }
+                        }
+                      }
+                    },
+                    "array_length": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-processes-process_id-inputs",
+        "description": "ある工程に必要な部材情報を一覧形式で取得します"
+      },
+      "post": {
+        "summary": "工程におけるインプットの新規登録",
+        "tags": [
+          "process-input"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程におけるインプットを新規登録した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子。"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子。"
+                    }
+                  }
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-processes-process_id-inputs",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "process_id": "string",
+                    "element_id": "string",
+                    "size": 0
+                  }
+                },
+                "properties": {
+                  "process_id": {
+                    "type": "string",
+                    "description": "プロセス固有の識別子。"
+                  },
+                  "element_id": {
+                    "type": "string",
+                    "description": "エレメント固有の識別子。プロセスに必要なエレメント。"
+                  },
+                  "size": {
+                    "type": "integer",
+                    "description": "プロセスに必要なエレメントの数量。"
+                  }
+                },
+                "required": [
+                  "process_id",
+                  "element_id"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "description": "ある工程に必要な部材情報を新規で登録します"
+      }
+    },
+    "/processes/{process_id}/inputs/{element_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "process_id",
+          "in": "path",
+          "required": true,
+          "description": "プロセス固有の識別子。"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "element_id",
+          "in": "path",
+          "required": true,
+          "description": "エレメント固有の識別子。プロセスに必要なエレメント。"
+        }
+      ],
+      "get": {
+        "summary": "工程における特定のインプットの情報取得",
+        "tags": [
+          "process-input"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子。"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子。プロセスに必要なエレメント。"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-processes-process_id-inputs-element_id",
+        "description": "ある工程に必要な特定の部材情報を取得します"
+      },
+      "patch": {
+        "summary": "工程におけるインプットの更新",
+        "tags": [
+          "process-input"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "object_type": "string",
+                      "created_at": "string",
+                      "process_id": "string",
+                      "element_id": "string"
+                    }
+                  },
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程におけるインプットを更新した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子。"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子。プロセスに必要なエレメント。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-processes-process_id-inputs-element_id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "process_id": "string",
+                    "element_id": "string",
+                    "size": 0
+                  }
+                },
+                "properties": {
+                  "process_id": {
+                    "type": "string",
+                    "description": "プロセス固有の識別子。"
+                  },
+                  "element_id": {
+                    "type": "string",
+                    "description": "エレメント固有の識別子。プロセスに必要なエレメント。"
+                  },
+                  "size": {
+                    "type": "integer",
+                    "description": "プロセスに必要なエレメントの数量。"
+                  }
+                },
+                "required": [
+                  "process_id",
+                  "element_id",
+                  "size"
+                ]
+              }
+            }
+          }
+        },
+        "description": "ある工程に必要な特定の部材情報を更新します"
+      },
+      "delete": {
+        "summary": "工程におけるインプットの削除",
+        "tags": [
+          "process-input"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete-processes-process_id-inputs-element_id",
+        "description": "ある工程に必要な特定の部材情報を削除します"
+      }
     }
   },
   "components": {
