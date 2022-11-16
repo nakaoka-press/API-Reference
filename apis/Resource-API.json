@@ -1852,9 +1852,6 @@
       ],
       "get": {
         "summary": "工程におけるインプットの一覧取得",
-        "tags": [
-          "process-input"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1898,13 +1895,13 @@
           }
         },
         "operationId": "get-v1-processes-process_id-inputs",
-        "description": "ある工程に必要な部材情報を一覧形式で取得します"
+        "description": "ある工程に必要な部材情報を一覧形式で取得します",
+        "tags": [
+          "process-inputs"
+        ]
       },
       "post": {
         "summary": "工程におけるインプットの新規登録",
-        "tags": [
-          "process-input"
-        ],
         "responses": {
           "201": {
             "description": "Created",
@@ -1973,7 +1970,10 @@
             }
           }
         },
-        "description": "ある工程に必要な部材情報を新規で登録します"
+        "description": "ある工程に必要な部材情報を新規で登録します",
+        "tags": [
+          "process-inputs"
+        ]
       }
     },
     "/processes/{process_id}/inputs/{element_id}": {
@@ -1999,9 +1999,6 @@
       ],
       "get": {
         "summary": "工程における特定のインプットの情報取得",
-        "tags": [
-          "process-input"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2028,13 +2025,13 @@
           }
         },
         "operationId": "get-processes-process_id-inputs-element_id",
-        "description": "ある工程に必要な特定の部材情報を取得します"
+        "description": "ある工程に必要な特定の部材情報を取得します",
+        "tags": [
+          "process-inputs"
+        ]
       },
       "patch": {
         "summary": "工程におけるインプットの更新",
-        "tags": [
-          "process-input"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2109,20 +2106,23 @@
             }
           }
         },
-        "description": "ある工程に必要な特定の部材情報を更新します"
+        "description": "ある工程に必要な特定の部材情報を更新します",
+        "tags": [
+          "process-inputs"
+        ]
       },
       "delete": {
         "summary": "工程におけるインプットの削除",
-        "tags": [
-          "process-input"
-        ],
         "responses": {
           "204": {
             "description": "No Content"
           }
         },
         "operationId": "delete-processes-process_id-inputs-element_id",
-        "description": "ある工程に必要な特定の部材情報を削除します"
+        "description": "ある工程に必要な特定の部材情報を削除します",
+        "tags": [
+          "process-inputs"
+        ]
       }
     },
     "/v1/processes/{process_id}/outputs": {
@@ -2139,9 +2139,6 @@
       ],
       "get": {
         "summary": "工程におけるアウトプットの一覧取得",
-        "tags": [
-          "process-output"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2185,13 +2182,13 @@
           }
         },
         "operationId": "get-v1-processes-process_id-outputs",
-        "description": "ある工程で作られる部材情報を一覧形式で取得します"
+        "description": "ある工程で作られる部材情報を一覧形式で取得します",
+        "tags": [
+          "process-outputs"
+        ]
       },
       "post": {
         "summary": "工程におけるアウトプットの新規登録",
-        "tags": [
-          "process-output"
-        ],
         "responses": {
           "201": {
             "description": "Created",
@@ -2251,7 +2248,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "process-outputs"
+        ]
       }
     },
     "/v1/processes/{process_id}/outputs/{element_id}": {
@@ -2277,9 +2277,6 @@
       ],
       "get": {
         "summary": "工程における特定のアウトプットの情報取得",
-        "tags": [
-          "process-output"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2307,13 +2304,13 @@
           }
         },
         "operationId": "get-v1-processes-process_id-outputs-element_id",
-        "description": "ある工程に必要な特定の部材情報を取得します"
+        "description": "ある工程に必要な特定の部材情報を取得します",
+        "tags": [
+          "process-outputs"
+        ]
       },
       "patch": {
         "summary": "工程におけるアウトプットの更新",
-        "tags": [
-          "process-output"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2370,20 +2367,23 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "process-outputs"
+        ]
       },
       "delete": {
         "summary": "工程におけるアウトプットの削除",
-        "tags": [
-          "process-output"
-        ],
         "responses": {
           "204": {
             "description": "No Content"
           }
         },
         "operationId": "delete-v1-processes-process_id-outputs-element_id",
-        "description": "ある工程に必要な特定の部材情報を削除します"
+        "description": "ある工程に必要な特定の部材情報を削除します",
+        "tags": [
+          "process-outputs"
+        ]
       }
     },
     "/v1/machines": {
@@ -2634,6 +2634,161 @@
         "operationId": "delete-v1-machines-machine_id",
         "description": "特定の材料に関する情報を削除します"
       }
+    },
+    "/v1/processes/{process_id}/machines": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "process_id",
+          "in": "path",
+          "required": true,
+          "description": "プロセス固有の識別子"
+        }
+      ],
+      "get": {
+        "summary": "工程における設備の一覧取得",
+        "tags": [
+          "process-machines"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "machines": {
+                      "type": "array",
+                      "description": "取得した設備情報の配列",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "process_id": {
+                            "type": "string",
+                            "description": "プロセス固有の識別子"
+                          },
+                          "machine_id": {
+                            "type": "string",
+                            "description": "設備固有の識別子"
+                          },
+                          "setup": {
+                            "type": "number",
+                            "description": "設備でプロセスの準備にかかる時間"
+                          },
+                          "n_value": {
+                            "type": "number",
+                            "description": "設備でプロセスを行うのにかかる単位時間"
+                          },
+                          "cleanup": {
+                            "type": "number",
+                            "description": "設備でプロセスの後始末にかかる時間"
+                          }
+                        }
+                      }
+                    },
+                    "array_length": {
+                      "type": "integer",
+                      "description": "取得した配列のサイズ"
+                    }
+                  }
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-processes-process_id-machines",
+        "description": "ある工程に利用可能な設備を一覧形式で取得します"
+      },
+      "post": {
+        "summary": "工程における設備の新規登録",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程における設備を新規登録した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子"
+                    },
+                    "machine_id": {
+                      "type": "string",
+                      "description": "設備固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-processes-process_id-machines",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "process_id": "string",
+                    "machine_id": "string",
+                    "setup": 0,
+                    "n_value": 0,
+                    "cleanup": 0
+                  }
+                },
+                "properties": {
+                  "process_id": {
+                    "type": "string",
+                    "description": "プロセス固有の識別子"
+                  },
+                  "machine_id": {
+                    "type": "string",
+                    "description": "設備固有の識別子"
+                  },
+                  "setup": {
+                    "type": "integer",
+                    "description": "設備でプロセスの準備にかかる時間"
+                  },
+                  "n_value": {
+                    "type": "integer",
+                    "description": "設備でプロセスを行うのにかかる単位時間"
+                  },
+                  "cleanup": {
+                    "type": "integer",
+                    "description": "設備でプロセスの後始末にかかる時間"
+                  }
+                },
+                "required": [
+                  "process_id",
+                  "machine_id"
+                ]
+              }
+            }
+          }
+        },
+        "description": "ある工程に利用可能な設備を新規で登録します",
+        "tags": [
+          "process-machines"
+        ]
+      }
     }
   },
   "components": {
@@ -2654,13 +2809,13 @@
       "name": "parts"
     },
     {
-      "name": "process-input"
+      "name": "process-inputs"
     },
     {
-      "name": "process-machine"
+      "name": "process-machines"
     },
     {
-      "name": "process-output"
+      "name": "process-outputs"
     },
     {
       "name": "processes"
