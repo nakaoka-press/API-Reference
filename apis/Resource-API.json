@@ -2262,7 +2262,8 @@
           },
           "name": "process_id",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "プロセス固有の識別子。"
         },
         {
           "schema": {
@@ -2270,7 +2271,8 @@
           },
           "name": "element_id",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "エレメント固有の識別子。プロセスで作られるエレメント。"
         }
       ],
       "get": {
@@ -2382,6 +2384,255 @@
         },
         "operationId": "delete-v1-processes-process_id-outputs-element_id",
         "description": "ある工程に必要な特定の部材情報を削除します"
+      }
+    },
+    "/v1/machines": {
+      "get": {
+        "summary": "設備の一覧取得",
+        "tags": [
+          "machines"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "has_more": {
+                      "type": "boolean",
+                      "description": "より多くの製品情報があるかどうかの真偽値。`false`であればリストの末尾。"
+                    },
+                    "machines": {
+                      "type": "array",
+                      "description": "取得した設備情報の配列",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "設備固有の識別子"
+                          },
+                          "site": {
+                            "type": "string",
+                            "description": "設備が存在する拠点の識別子"
+                          },
+                          "is_available": {
+                            "type": "boolean",
+                            "description": "設備が稼働可能な状況にあるかを示す"
+                          }
+                        }
+                      }
+                    },
+                    "array_length": {
+                      "type": "integer",
+                      "description": "取得した配列のサイズ"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-machines",
+        "description": "設備に関する情報を配列形式で取得します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "examples": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "設備の新規登録",
+        "tags": [
+          "machines"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "設備を新規登録した日付"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "設備固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-machines",
+        "description": "設備に関する情報を新規で登録します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "設備固有の識別子"
+                  },
+                  "site": {
+                    "type": "string",
+                    "description": "設備が存在する拠点の識別子"
+                  },
+                  "available": {
+                    "type": "boolean",
+                    "description": "設備が稼働可能な状況にあるかを示す"
+                  }
+                },
+                "required": [
+                  "id",
+                  "site",
+                  "available"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/machines/{machine_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "machine_id",
+          "in": "path",
+          "required": true,
+          "description": "設備固有の識別子"
+        }
+      ],
+      "get": {
+        "summary": "特定の設備の情報取得",
+        "tags": [
+          "machines"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "設備固有の識別子"
+                    },
+                    "site": {
+                      "type": "string",
+                      "description": "設備が存在する拠点の識別子"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "description": "設備が稼働可能な状況にあるかを示す"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-machines-machine_id",
+        "description": "特定の設備に関する情報を取得します"
+      },
+      "patch": {
+        "summary": "設備の更新",
+        "tags": [
+          "machines"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "製品を更新した日付"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "設備固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-v1-machines-machine_id",
+        "description": "特定の設備に関する情報を更新します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "設備固有の識別子"
+                  },
+                  "site": {
+                    "type": "string",
+                    "description": "設備が存在する拠点の識別子"
+                  },
+                  "avaialble": {
+                    "type": "boolean",
+                    "description": "設備が稼働可能な状況にあるかを示す"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "設備の削除",
+        "tags": [
+          "machines"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete-v1-machines-machine_id",
+        "description": "特定の材料に関する情報を削除します"
       }
     }
   },
