@@ -2734,7 +2734,8 @@
                       "description": "設備固有の識別子"
                     }
                   }
-                }
+                },
+                "examples": {}
               }
             }
           }
@@ -2780,7 +2781,8 @@
                   "process_id",
                   "machine_id"
                 ]
-              }
+              },
+              "examples": {}
             }
           }
         },
@@ -2788,6 +2790,182 @@
         "tags": [
           "process-machines"
         ]
+      }
+    },
+    "/v1/processes/{process_id}/machines/{machine_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "process_id",
+          "in": "path",
+          "required": true,
+          "description": "プロセス固有の識別子"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "machine_id",
+          "in": "path",
+          "required": true,
+          "description": "設備固有の識別子"
+        }
+      ],
+      "get": {
+        "summary": "工程における特定の設備の情報取得",
+        "tags": [
+          "process-machines"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "process_id": "string",
+                      "machine_id": "string",
+                      "setup": 0,
+                      "n_value": 0,
+                      "cleanup": 0
+                    }
+                  },
+                  "properties": {
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子"
+                    },
+                    "machine_id": {
+                      "type": "string",
+                      "description": "設備固有の識別子"
+                    },
+                    "setup": {
+                      "type": "integer",
+                      "description": "設備でプロセスの準備にかかる時間"
+                    },
+                    "n_value": {
+                      "type": "integer",
+                      "description": "設備でプロセスを行うのにかかる単位時間"
+                    },
+                    "cleanup": {
+                      "type": "integer",
+                      "description": "設備でプロセスの後始末にかかる時間"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-processes-process_id-machines-machine_id",
+        "description": "ある工程に利用可能な特定の設備を取得します"
+      },
+      "patch": {
+        "summary": "工程における設備の更新",
+        "tags": [
+          "process-machines"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "object_type": "string",
+                      "created_at": "string",
+                      "process_id": "string",
+                      "machine_id": "string"
+                    }
+                  },
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程における設備を更新した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子"
+                    },
+                    "machine_id": {
+                      "type": "string",
+                      "description": "設備固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-v1-processes-process_id-machines-machine_id",
+        "description": "ある工程に利用可能な特定の設備を更新します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "process_id": "string",
+                    "machine_id": "string",
+                    "setup": 0,
+                    "n_value": 0,
+                    "cleanup": 0
+                  }
+                },
+                "properties": {
+                  "process_id": {
+                    "type": "string",
+                    "description": "プロセス固有の識別子"
+                  },
+                  "machine_id": {
+                    "type": "string",
+                    "description": "設備固有の識別子"
+                  },
+                  "setup": {
+                    "type": "integer",
+                    "description": "設備でプロセスの準備にかかる時間"
+                  },
+                  "n_value": {
+                    "type": "integer",
+                    "description": "設備でプロセスを行うのにかかる単位時間"
+                  },
+                  "cleanup": {
+                    "type": "integer",
+                    "description": "設備でプロセスの後始末にかかる時間"
+                  }
+                },
+                "required": [
+                  "process_id",
+                  "machine_id"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "工程における設備の削除",
+        "tags": [
+          "process-machines"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete-v1-processes-process_id-machines-machine_id",
+        "description": "ある工程に利用可能な特定の設備を削除します"
       }
     }
   },
