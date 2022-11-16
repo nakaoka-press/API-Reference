@@ -28,8 +28,9 @@ $ bash ./scripts/run.sh
     -   [x] Products
     -   [x] Parts
     -   [x] Materials
-    -   [ ] Processes
-        -   [ ] Process input
+    -   [ ] Process
+        -   [x] Processes
+        -   [x] Process input
         -   [ ] Process output
         -   [ ] Machines
     -   [ ] Machines

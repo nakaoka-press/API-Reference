@@ -2253,6 +2253,136 @@
           }
         }
       }
+    },
+    "/v1/processes/{process_id}/outputs/{element_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "process_id",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "element_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "工程における特定のアウトプットの情報取得",
+        "tags": [
+          "process-output"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子。"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子。プロセスで作られるエレメント。"
+                    },
+                    "size": {
+                      "description": "プロセスによって作られるエレメントの数量。",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-processes-process_id-outputs-element_id",
+        "description": "ある工程に必要な特定の部材情報を取得します"
+      },
+      "patch": {
+        "summary": "工程におけるアウトプットの更新",
+        "tags": [
+          "process-output"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "工程におけるアウトプットを更新した日付"
+                    },
+                    "process_id": {
+                      "type": "string",
+                      "description": "プロセス固有の識別子"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子。プロセスで作られるエレメント。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-v1-processes-process_id-outputs-element_id",
+        "description": "ある工程に必要な特定の部材情報を更新します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "process_id": {
+                    "type": "string"
+                  },
+                  "element_id": {
+                    "type": "string"
+                  },
+                  "size": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "process_id",
+                  "element_id",
+                  "size"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "工程におけるアウトプットの削除",
+        "tags": [
+          "process-output"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete-v1-processes-process_id-outputs-element_id",
+        "description": "ある工程に必要な特定の部材情報を削除します"
+      }
     }
   },
   "components": {
