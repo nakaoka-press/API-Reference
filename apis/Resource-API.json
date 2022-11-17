@@ -3529,6 +3529,14 @@
                           "element_id": {
                             "type": "string",
                             "description": "エレメント固有の識別子"
+                          },
+                          "class": {
+                            "type": "string",
+                            "description": "エレメント（製品・部材・材料）の分類"
+                          },
+                          "item_id": {
+                            "type": "string",
+                            "description": "クラスが持つ固有のID（エレメントが製品なら製品番号、部材なら部材番号）"
                           }
                         }
                       }
@@ -3610,6 +3618,14 @@
                     "element_id": {
                       "type": "string",
                       "description": "エレメント固有の識別子"
+                    },
+                    "class": {
+                      "type": "string",
+                      "description": "エレメント（製品・部材・材料）の分類"
+                    },
+                    "item_id": {
+                      "type": "string",
+                      "description": "クラスが持つ固有のID（エレメントが製品なら製品番号、部材なら部材番号）"
                     }
                   }
                 }
