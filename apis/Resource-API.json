@@ -161,7 +161,8 @@
                   "type": "object",
                   "properties": {
                     "object_type": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "レスポンスの種類"
                     },
                     "created_at": {
                       "type": "string",
@@ -169,11 +170,11 @@
                     },
                     "element_id": {
                       "type": "string",
-                      "description": "エレメント固有の識別子。`/v1/elements/{element_id}`で新規登録したエレメントの情報を取得する。"
+                      "description": "エレメント固有の識別子"
                     },
                     "id": {
                       "type": "string",
-                      "description": "取引先との間で使用する製品固有の識別番号。`/v1/products/{id}`で新規登録した製品情報を取得する。"
+                      "description": "取引先との間で使用する製品固有の識別番号"
                     }
                   }
                 },
@@ -294,6 +295,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
                     "element_id": {
                       "type": "string",
                       "description": "エレメント固有の識別子"
@@ -352,16 +357,6 @@
         "operationId": "get-v1-products-product-id",
         "parameters": [],
         "description": "取引先に納品する製品の製品番号を用いて、特定の製品情報を取得します",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          },
-          "description": "特定の製品情報を取得する"
-        },
         "x-internal": true
       },
       "delete": {
@@ -3501,6 +3496,130 @@
         },
         "operationId": "delete-v1-clients-client_id",
         "description": "取引先に関する情報を削除します"
+      }
+    },
+    "/v1/elements": {
+      "get": {
+        "summary": "エレメントの一覧取得",
+        "tags": [
+          "elements"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "has_more": {
+                      "type": "string",
+                      "description": "より多くのエレメント情報があるかどうかの真偽値。falseであればリストの末尾。"
+                    },
+                    "elements": {
+                      "type": "array",
+                      "description": "取得したエレメントの配列",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "element_id": {
+                            "type": "string",
+                            "description": "エレメント固有の識別子"
+                          }
+                        }
+                      }
+                    },
+                    "array_length": {
+                      "type": "string",
+                      "description": "取得した配列のサイズ"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "object_type": "string",
+                      "has_more": "string",
+                      "elements": [
+                        {
+                          "element_id": "string"
+                        }
+                      ],
+                      "array_length": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-elements",
+        "description": "エレメントを配列形式で取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "最大取得数"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "取得位置（相対位置）",
+            "name": "offset"
+          }
+        ]
+      }
+    },
+    "/v1/elements/{element_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "element_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "特定のエレメントの情報取得",
+        "tags": [
+          "elements"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "element_id": {
+                      "type": "string",
+                      "description": "エレメント固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-elements-element_id",
+        "parameters": [],
+        "description": "特定のエレメント情報を取得する"
       }
     }
   },
