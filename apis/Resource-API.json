@@ -540,7 +540,7 @@
                             "type": "string",
                             "description": "エレメント固有の識別子"
                           },
-                          "kind": {
+                          "class": {
                             "type": "string",
                             "description": "プレス部材・支給部品・購入部品を識別するための番号。"
                           },
@@ -568,7 +568,7 @@
                             "type": "integer",
                             "description": "一度に生産する基準となる数量。（プレスのみ）"
                           },
-                          "period_day": {
+                          "duration": {
                             "type": "integer",
                             "description": "生産するのにかかる標準の日数"
                           },
@@ -673,7 +673,7 @@
                   }
                 },
                 "properties": {
-                  "kind": {
+                  "class": {
                     "type": "string",
                     "description": "プレス部材・支給部品・購入部品を識別するための番号。"
                   },
@@ -701,7 +701,7 @@
                     "type": "integer",
                     "description": "一度に生産する基準となる数量。（プレスのみ）"
                   },
-                  "period_day": {
+                  "duration": {
                     "type": "integer",
                     "description": "生産するのにかかる標準の日数？"
                   },
@@ -715,12 +715,12 @@
                   }
                 },
                 "required": [
-                  "kind",
+                  "class",
                   "id",
                   "name",
                   "lower_bound",
                   "standard_lot",
-                  "period_day",
+                  "duration",
                   "client_id",
                   "unit_weight"
                 ]
@@ -777,7 +777,7 @@
                       "type": "string",
                       "description": "エレメント固有の識別子"
                     },
-                    "kind": {
+                    "class": {
                       "type": "string",
                       "description": "プレス部材・支給部品・購入部品を識別するための番号。"
                     },
@@ -805,7 +805,7 @@
                       "type": "integer",
                       "description": "一度に生産する基準となる数量。（プレスのみ）"
                     },
-                    "period_day": {
+                    "duration": {
                       "type": "integer",
                       "description": "生産するのにかかる標準の日数？"
                     },
@@ -891,7 +891,7 @@
                   }
                 },
                 "properties": {
-                  "kind": {
+                  "class": {
                     "type": "string",
                     "description": "プレス部材・支給部品・購入部品を識別するための番号。"
                   },
@@ -919,7 +919,7 @@
                     "type": "integer",
                     "description": "一度に生産する基準となる数量。（プレスのみ）"
                   },
-                  "period_day": {
+                  "duration": {
                     "type": "integer",
                     "description": "生産するのにかかる標準の日数？"
                   },
