@@ -2404,10 +2404,6 @@
                       "type": "string",
                       "description": "レスポンスの種類"
                     },
-                    "has_more": {
-                      "type": "boolean",
-                      "description": "より多くの製品情報があるかどうかの真偽値。`false`であればリストの末尾。"
-                    },
                     "machines": {
                       "type": "array",
                       "description": "取得した設備情報の配列",
@@ -2499,7 +2495,7 @@
                     "type": "string",
                     "description": "設備が存在する拠点の識別子"
                   },
-                  "available": {
+                  "is_available": {
                     "type": "boolean",
                     "description": "設備が稼働可能な状況にあるかを示す"
                   }
@@ -2507,7 +2503,7 @@
                 "required": [
                   "id",
                   "site",
-                  "available"
+                  "is_available"
                 ]
               }
             }
@@ -2548,7 +2544,7 @@
                       "type": "string",
                       "description": "設備が存在する拠点の識別子"
                     },
-                    "available": {
+                    "is_available": {
                       "type": "boolean",
                       "description": "設備が稼働可能な状況にあるかを示す"
                     }
@@ -2608,7 +2604,7 @@
                     "type": "string",
                     "description": "設備が存在する拠点の識別子"
                   },
-                  "avaialble": {
+                  "is_available": {
                     "type": "boolean",
                     "description": "設備が稼働可能な状況にあるかを示す"
                   }
@@ -2966,6 +2962,227 @@
         },
         "operationId": "delete-v1-processes-process_id-machines-machine_id",
         "description": "ある工程に利用可能な特定の設備を削除します"
+      }
+    },
+    "/v1/sites": {
+      "get": {
+        "summary": "拠点の一覧取得",
+        "tags": [
+          "sites"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "sites": {
+                      "type": "array",
+                      "description": "取得した拠点情報の配列",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "拠点固有の識別子"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "拠点固有の名称"
+                          }
+                        }
+                      }
+                    },
+                    "array_length": {
+                      "type": "string",
+                      "description": "取得した配列のサイズ"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-sites",
+        "description": "拠点に関する情報を配列形式で取得します"
+      },
+      "post": {
+        "summary": "拠点の新規登録",
+        "tags": [
+          "sites"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "拠点を新規登録した日付"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "拠点固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-sites",
+        "description": "拠点に関する情報を新規で登録します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "拠点固有の識別子"
+                  },
+                  "site": {
+                    "type": "string",
+                    "description": "拠点固有の名称"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sites/{site_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "site_id",
+          "in": "path",
+          "required": true,
+          "description": "拠点固有の識別子"
+        }
+      ],
+      "get": {
+        "summary": "特定の拠点の情報取得",
+        "tags": [
+          "sites"
+        ],
+        "operationId": "get-v1-sites-site_id",
+        "description": "特定の拠点に関する情報を取得します",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "拠点固有の識別子"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "拠点固有の名称"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "拠点の更新",
+        "tags": [
+          "sites"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "description": "レスポンスの種類"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "拠点情報を更新した日付"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "拠点固有の識別子"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-v1-sites-site_id",
+        "description": "特定の拠点に関する情報を更新します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "拠点固有の識別子"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "拠点固有の名称"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "拠点の削除",
+        "tags": [
+          "sites"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete-v1-sites-site_id",
+        "description": "特定の拠点に関する情報を削除します"
       }
     }
   },
