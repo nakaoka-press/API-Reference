@@ -31,8 +31,8 @@ $ bash ./scripts/run.sh
     -   [ ] Process
         -   [x] Processes
         -   [x] Process input
-        -   [ ] Process output
-        -   [ ] Machines
-    -   [ ] Machines
-    -   [ ] Site
-    -   [ ] Clients
+        -   [x] Process output
+        -   [x] Machines
+    -   [x] Machines
+    -   [x] Site
+    -   [x] Clients

@@ -2669,15 +2669,15 @@
                             "type": "string",
                             "description": "設備固有の識別子"
                           },
-                          "setup": {
+                          "setup_time": {
                             "type": "number",
                             "description": "設備でプロセスの準備にかかる時間"
                           },
-                          "n_value": {
+                          "process_time": {
                             "type": "number",
                             "description": "設備でプロセスを行うのにかかる単位時間"
                           },
-                          "cleanup": {
+                          "cleanup_time": {
                             "type": "number",
                             "description": "設備でプロセスの後始末にかかる時間"
                           }
@@ -2755,16 +2755,16 @@
                     "type": "string",
                     "description": "設備固有の識別子"
                   },
-                  "setup": {
-                    "type": "integer",
-                    "description": "設備でプロセスの準備にかかる時間"
+                  "setup_time": {
+                    "description": "設備でプロセスの準備にかかる時間",
+                    "type": "number"
                   },
-                  "n_value": {
-                    "type": "integer",
+                  "process_time": {
+                    "type": "number",
                     "description": "設備でプロセスを行うのにかかる単位時間"
                   },
-                  "cleanup": {
-                    "type": "integer",
+                  "cleanup_time": {
+                    "type": "number",
                     "description": "設備でプロセスの後始末にかかる時間"
                   }
                 },
@@ -2834,16 +2834,16 @@
                       "type": "string",
                       "description": "設備固有の識別子"
                     },
-                    "setup": {
-                      "type": "integer",
+                    "setup_time": {
+                      "type": "number",
                       "description": "設備でプロセスの準備にかかる時間"
                     },
-                    "n_value": {
-                      "type": "integer",
+                    "process_time": {
+                      "type": "number",
                       "description": "設備でプロセスを行うのにかかる単位時間"
                     },
-                    "cleanup": {
-                      "type": "integer",
+                    "cleanup_time": {
+                      "type": "number",
                       "description": "設備でプロセスの後始末にかかる時間"
                     }
                   }
@@ -2923,16 +2923,16 @@
                     "type": "string",
                     "description": "設備固有の識別子"
                   },
-                  "setup": {
-                    "type": "integer",
+                  "setup_time": {
+                    "type": "number",
                     "description": "設備でプロセスの準備にかかる時間"
                   },
-                  "n_value": {
-                    "type": "integer",
+                  "process_time": {
+                    "type": "number",
                     "description": "設備でプロセスを行うのにかかる単位時間"
                   },
-                  "cleanup": {
-                    "type": "integer",
+                  "cleanup_time": {
+                    "type": "number",
                     "description": "設備でプロセスの後始末にかかる時間"
                   }
                 },
